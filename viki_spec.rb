@@ -14,23 +14,4 @@ describe "testing suite" do
 		poland_notation("2+3*5").should == "235*+"
 	end
 
-	it "should return poland nonation" do
-		poland_notation("(2+3)*5").should == "23+5*"
-	end
-
-	it "should return poland nonation" do
-		poland_notation("(2+3)*(5+7)").should == "23+57+*"
-	end
-
-	it "should return poland nonation" do
-		poland_notation("5*(1+2)").should == "512+*"
-	end
-
-	it "should return poland nonation" do
-		poland_notation("25^5+4*3").should == "255^43*+"
-	end
-
-	it "should ddd" do
-		poland_notation("(12+1)^(90*8+7)-12").should == "121+908*7+^12-"
-	end
 end

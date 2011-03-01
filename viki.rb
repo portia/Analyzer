@@ -1,23 +1,39 @@
 def poland_notation input
+
 	number = []
-	stack = []
 	output = []
-	
-	operators = ["+", "-", "*", "/", "^", "(", ")"]
-	priority = {"+" => 0, "-" => 0, "*" => 1, "/" => 1, "^" => 2, "(" => 0, ")" => -1}
+	stack = []
+
+	priority = {"+" => 0, "-" => 0, "*" => 1, "/" => 1, "^" => 2}
+	operators = priority.keys
 	input = input.reverse.split('')
 
 	until input.empty?
 		x = input.pop
-		number.push x if ('0'..'9').include? x
-
-		if operators.include? x 
+		if ('0'..'9').include? x
+			number.push x
+		else
 			output.push number.join
 			number = []
+		end
 
-			if operators.include? stack.last	
-				output.push stack.pop while priority[x] < priority[stack.last] 
-			end				
+		stack << x if x == '('
+
+		if (x == ')')
+				until (stack.last == '(')
+					output.push stack.pop
+				end
+				stack.pop
+			end
+
+			if operators.include? x
+			while (operators.include? stack.last)
+				if (priority[x] < priority[stack.last])
+					output.push stack.pop
+				else break
+				end
+			end
+
 			stack << x
 		end
 	end

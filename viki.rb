@@ -24,9 +24,9 @@ def poland_notation input
 					output.push stack.pop
 				end
 				stack.pop
-			end
+		end
 
-			if operators.include? x
+		if operators.include? x
 			while (operators.include? stack.last)
 				if (priority[x] < priority[stack.last])
 					output.push stack.pop
@@ -39,5 +39,63 @@ def poland_notation input
 	end
 
 	output << number << stack.reverse
-	output.join.to_s
+	output
+end
+
+class Integer
+	def value
+		self
+	end
+end
+
+class Float
+	def value
+		self
+	end
+end
+
+class Node
+	
+	attr_accessor :left_operand
+	attr_accessor :right_operand
+	attr_accessor :operator
+
+	def initialize operator, right, left
+		@left_operand = left
+		@right_operand = right
+		@operator = operator
+	end
+
+	def value
+		case @operator
+		when "+" then @left_operand.value + @right_operand.value
+		when "-" then @left_operand.value - @right_operand.value
+		end
+	end
+
+end
+
+class Builder
+	attr_accessor :array
+	attr_accessor :x
+	attr_accessor :node
+
+	OPERATORS = ["+", "-", "*", "/", "^"]
+
+	def initialize a
+		@array = a
+		@x = []
+		@node = Node.new(@array.pop, @array.pop, @array.pop)
+	end
+
+	def build
+		until @array.empty?
+			if OPERATORS.include? @array.last
+				@node = Node.new(@array.pop, x.pop, @node)
+			else
+				@x.push(@array.pop)
+			end
+		end
+		@node
+	end
 end

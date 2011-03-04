@@ -7,31 +7,31 @@ describe "testing suite" do
 	end
 
 	it "should return poland nonation" do
-		poland_notation("27+35+45").should == "273545++"
+		poland_notation("27+35+45").should == ["27", "35", "45", "+", "+"]
 	end
 
 	it "should return poland nonation" do
-		poland_notation("2+3*5").should == "235*+"
+		poland_notation("2+3*5").should == ["2", "3", "5", "*", "+"]
 	end
 
 	it "should return poland nonation" do
-		poland_notation("(2+3)*5").should == "23+5*"
+		poland_notation("(2+3)*5").should == ["2", "3", "+", "5", "*"]
 	end
 
 	it "should return poland nonation" do
-		poland_notation("(2+3)*(5+7)").should == "23+57+*"
+		poland_notation("(2+3)*(5+7)").should == ["2", "3", "+", "5", "7", "+", "*"]
 	end
 
 	it "should return poland nonation" do
-		poland_notation("5*(1+2)").should == "512+*"
+		poland_notation("5*(1+2)").should == ["5", "1", "2", "+", "*"]
 	end
 
 	it "should return poland nonation" do
-		poland_notation("25^5+4*3").should == "255^43*+"
+		poland_notation("25^5+4*3").should == ["25", "5", "^", "4", "3", "*", "+"]
 	end
 
 	it "should ddd" do
-		poland_notation("(12+1)^(90*8+7)-12").should == "121+908*7+^12-"
+		poland_notation("(12+1)^(90*8+7)-12").should == ["12", "1", "+", "90", "8", "*", "7", "+", "^", "12", "-"]
 	end
 
 	it "should return value of node" do

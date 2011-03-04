@@ -38,8 +38,10 @@ def poland_notation input
 		end
 	end
 
-	output << number << stack.reverse
-	output
+	output << number.join
+	output << stack.pop until stack.empty?
+#	output << number.join << stack.reverse
+	output.delete_if {|x| x == ""}
 end
 
 class Integer
@@ -51,6 +53,12 @@ end
 class Float
 	def value
 		self
+	end
+end
+
+class String
+	def value
+		self.to_i
 	end
 end
 
@@ -96,9 +104,6 @@ class Builder
 				@x.push(@array.pop)
 			end
 		end
-		@node
+		@node.value
 	end
 end
-
-node = Node.new("+", 2, 1)
-puts node.value

@@ -3,7 +3,7 @@ require 'viki'
 describe "testing suite" do
 
 	it "should return poland nonation" do
-		poland_notation("27+35").should == "2735+"
+		poland_notation("27+35").should == ["27", "35", "+"]
 	end
 
 	it "should return poland nonation" do
@@ -32,5 +32,10 @@ describe "testing suite" do
 
 	it "should ddd" do
 		poland_notation("(12+1)^(90*8+7)-12").should == "121+908*7+^12-"
+	end
+
+	it "should return value of node" do
+		node = Node.new("+", 2, 1)
+		node.value.should == 3
 	end
 end

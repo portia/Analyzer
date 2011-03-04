@@ -83,7 +83,7 @@ class Builder
 	OPERATORS = ["+", "-", "*", "/", "^"]
 
 	def initialize a
-		@array = a
+		@array = poland_notation(a)
 		@x = []
 		@node = Node.new(@array.pop, @array.pop, @array.pop)
 	end
@@ -99,3 +99,6 @@ class Builder
 		@node
 	end
 end
+
+node = Node.new("+", 2, 1)
+puts node.value

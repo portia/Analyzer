@@ -3,39 +3,30 @@ require 'viki'
 describe "testing suite" do
 
 	it "should return poland nonation" do
-		poland_notation("27+35").should == ["27", "35", "+"]
+		Builder.new("27+35").build.value.should == 62
 	end
 
 	it "should return poland nonation" do
-		poland_notation("27+35+45").should == ["27", "35", "45", "+", "+"]
+		Builder.new("27+35+45").build.value.should == 107
 	end
 
 	it "should return poland nonation" do
-		poland_notation("2+3*5").should == ["2", "3", "5", "*", "+"]
+		Builder.new("2+3*5").build.value.should == 17
 	end
 
 	it "should return poland nonation" do
-		poland_notation("(2+3)*5").should == ["2", "3", "+", "5", "*"]
+		Builder.new("(2+3)*5").build.value.should == 25
 	end
 
 	it "should return poland nonation" do
-		poland_notation("(2+3)*(5+7)").should == ["2", "3", "+", "5", "7", "+", "*"]
+		Builder.new("(2+3)*(5+7)").build.value.should == 60
 	end
 
 	it "should return poland nonation" do
-		poland_notation("5*(1+2)").should == ["5", "1", "2", "+", "*"]
+		Builder.new("5*(1+2)").build.value.should == 15
 	end
 
 	it "should return poland nonation" do
-		poland_notation("25^5+4*3").should == ["25", "5", "^", "4", "3", "*", "+"]
-	end
-
-	it "should ddd" do
-		poland_notation("(12+1)^(90*8+7)-12").should == ["12", "1", "+", "90", "8", "*", "7", "+", "^", "12", "-"]
-	end
-
-	it "should return value of node" do
-		node = Node.new("+", 2, 1)
-		node.value.should == 3
+		Builder.new("25^(1/2)+4*3").build.value.should == 17
 	end
 end

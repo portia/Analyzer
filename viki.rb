@@ -13,7 +13,7 @@ def poland_notation input
 		if ('0'..'9').include? x
 			number.push x
 		else
-			output.push number.join
+			output.push number.join.to_f if number != []
 			number = []
 		end
 
@@ -38,9 +38,8 @@ def poland_notation input
 		end
 	end
 
-	output << number.join
+	output << number.join.to_f if number != []
 	output << stack.pop until stack.empty?
-#	output << number.join << stack.reverse
 	output.delete_if {|x| x == ""}
 end
 
@@ -68,7 +67,7 @@ class Node
 	attr_accessor :right_operand
 	attr_accessor :operator
 
-	def initialize operator, right, left
+	def initialize right, left, operator
 		@left_operand = left
 		@right_operand = right
 		@operator = operator
@@ -78,6 +77,9 @@ class Node
 		case @operator
 		when "+" then @left_operand.value + @right_operand.value
 		when "-" then @left_operand.value - @right_operand.value
+		when "*" then @left_operand.value * @right_operand.value
+		when "/" then @left_operand.value / @right_operand.value
+		when "^" then @left_operand.value ** @right_operand.value
 		end
 	end
 
@@ -91,19 +93,17 @@ class Builder
 	OPERATORS = ["+", "-", "*", "/", "^"]
 
 	def initialize a
-		@array = poland_notation(a)
+		@array = poland_notation(a).reverse
 		@x = []
-		@node = Node.new(@array.pop, @array.pop, @array.pop)
 	end
 
 	def build
-		until @array.empty?
-			if OPERATORS.include? @array.last
-				@node = Node.new(@array.pop, x.pop, @node)
-			else
-				@x.push(@array.pop)
-			end
+		until @array.first == @node
+			@x << @array.pop until OPERATORS.include? @array.last
+			@node = Node.new(@x.pop, @x.pop, @array.pop)
+			@array << @node
 		end
-		@node.value
+		@node
 	end
+
 end

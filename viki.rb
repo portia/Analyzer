@@ -107,3 +107,7 @@ class Builder
 	end
 
 end
+
+def calc input
+	Builder.new(input).build.value
+end

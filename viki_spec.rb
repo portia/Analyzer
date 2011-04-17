@@ -29,4 +29,8 @@ describe "testing suite" do
 	it "should return poland nonation" do
 		Builder.new("25^(1/2)+4*3").build.value.should == 17
 	end
+
+	it "should return poland nonation" do
+		calc ("2+3*(2+1)").should == 11
+	end
 end

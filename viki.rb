@@ -43,21 +43,9 @@ def poland_notation input
 	output.delete_if {|x| x == ""}
 end
 
-class Integer
-	def value
-		self
-	end
-end
-
 class Float
 	def value
 		self
-	end
-end
-
-class String
-	def value
-		self.to_i
 	end
 end
 
@@ -111,3 +99,4 @@ end
 def calc input
 	Builder.new(input).build.value
 end
+

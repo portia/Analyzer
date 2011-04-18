@@ -20,7 +20,7 @@ def min a,b
 end
 
 def projection y
-	y.each{|item|max(-1,min(1,item))}
+	y.map{|item|max(-1,min(1,item))}
 end
 
 def m n
@@ -31,11 +31,14 @@ def m n
 		end
 		a[0,1] = -1
 		a[n-1,n-2] = -1
-	a = a/(n+1)**2.0
+	a = a/(n+1)**2
 end
 
 def f x, n
-	a = x.covector*m(n)*x/2
+	v = []
+	for i in 0..n-1 do v.push 20 end
+	v = Vector.elements(v, copy = true)
+	a = x.covector*m(n)*x/2 + v.covector*x
 	b = a[0]
 end
 
@@ -43,24 +46,23 @@ def grad x, n
 	a = m(n)
 	s = 0
 	r = []
-		for i in 0..n-1 do
-			for j in 0..n-1 do
-				s=s+2*a[j,i]*x[i]**2
+		for j in 0..n-1 do
+			for i in 0..n-1 do
+				s = s + x[i]*(a[i,j] + a[j,i])
 			end
-			r.push s
+			r.push (s/2 + 20)
 			s = 0
 		end
-Vector.elements(r,copy=true)
+	Vector.elements(r,copy=true)
 end
 
 
-def alg n
+def alg x, n
 
-	x=Vector.[](0.1,0.1,0.1)
 	r = 0.01
 	a = 0.1
 	e = 0.001
-	
+	k = 0
 	while ((x-projection(x-grad(x,n))).r>e)	do
 		l = 0
 		y = x
@@ -73,7 +75,7 @@ def alg n
 x
 end
 
-x=Vector.[](1,1,1)
-r = 0.01
-l=3
-puts f(alg(3),3)
+x = []
+for i in 0..99	 do x[i] = -0.5 end
+x = Vector.elements(x,copy=true)
+puts f(alg(x,100),100)

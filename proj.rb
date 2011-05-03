@@ -6,21 +6,8 @@ class Matrix
   end
 end
 
-
-def max a,b
-	if a>b then return a
-	else return b
-	end
-end
-
-def min a,b
-	if a<b then return a
-	else return b
-	end
-end
-
 def projection y
-	y.map{|item|max(-1,min(1,item))}
+	y.map{|item|[-1, [1, item].min].max}
 end
 
 def m n
@@ -38,8 +25,7 @@ def f x, n
 	v = []
 	for i in 0..n-1 do v.push 20 end
 	v = Vector.elements(v, copy = true)
-	a = x.covector*m(n)*x/2 + v.covector*x
-	b = a[0]
+	(x.covector*m(n)*x/2 + v.covector*x)[0]
 end
 
 def grad x, n
@@ -61,21 +47,24 @@ def alg x, n
 
 	r = 0.01
 	a = 0.1
-	e = 0.001
+	e = 0.0001
 	k = 0
 	while ((x-projection(x-grad(x,n))).r>e)	do
 		l = 0
 		y = x
-		x = projection(x-r**l*grad(x,n))
+		x = projection(x-r**l*grad(x,n))														 
 		while (f(x,n)>(f(y,n)-(grad(y,n).inner_product (y-x))*a)) do
 			l = l+1
 			x = projection(y-r**l*grad(y,n))
 		end
+		k+=1
 	end	
-x
+k
 end
 
 x = []
-for i in 0..99	 do x[i] = -0.5 end
+for i in 1..1000 do x.push -1 end
 x = Vector.elements(x,copy=true)
-puts f(alg(x,100),100)
+puts x
+#puts alg(x,1000)
+puts f(x,1000)
